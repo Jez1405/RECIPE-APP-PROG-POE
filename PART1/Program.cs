@@ -23,38 +23,47 @@ namespace RECIPEAPPLICATION
         {
             // IT PROMPTS THE USER TO ENTER THE NUMBER OF INGREDIENTS BEING USED
             Console.Write("Enter the number of ingredients: ");
-            int numIngredients = int.Parse(Console.ReadLine());
-
-            // INITIALIZES ARRAYS WITH CORRECT
-            ingredients = new string[numIngredients];
-            quantities = new double[numIngredients];
-            units = new string[numIngredients];
-
-            //PROMPTS THE USER TO ENTER THE NUMBER OF INGREDIENTS
-            for (int i = 0; i < numIngredients; i++)
+            int numIngredients;
+            if(int.TryParse(Console.ReadLine(),out numIngredients))
             {
-                Console.WriteLine($"Enter details for ingredient #{i + 1}:");
-                Console.Write("Name: ");
-                ingredients[i] = Console.ReadLine();
-                Console.Write("Quantity: ");
-                quantities[i] = double.Parse(Console.ReadLine());
-                Console.Write("Unit of measurement: ");
-                units[i] = Console.ReadLine();
+                // INITIALIZES ARRAYS WITH CORRECT
+                ingredients = new string[numIngredients];
+                quantities = new double[numIngredients];
+                units = new string[numIngredients];
+
+                //PROMPTS THE USER TO ENTER THE NUMBER OF INGREDIENTS
+                for (int i = 0; i < numIngredients; i++)
+                {
+                    Console.WriteLine($"Enter details for ingredient #{i + 1}:");
+                    Console.Write("Name: ");
+                    ingredients[i] = Console.ReadLine();
+                    Console.Write("Quantity: ");
+                    quantities[i] = double.Parse(Console.ReadLine());
+                    Console.Write("Unit of measurement: ");
+                    units[i] = Console.ReadLine();
+                }
+
+                //THE USER TO ENTER THE NUMBER OF STEPS
+                Console.Write("Enter the number of steps: ");
+                int numSteps = int.Parse(Console.ReadLine());
+
+                // INITIALIZES THE STEPS ARRAY WITH THE CORRECT SIZES
+                steps = new string[numSteps];
+
+                //THE USER TO ENTER THE NUMBER OF STEPS
+                for (int i = 0; i < numSteps; i++)
+                {
+                    Console.Write($"Enter step #{i + 1}: ");
+                    steps[i] = Console.ReadLine();
+                }
             }
-
-            //THE USER TO ENTER THE NUMBER OF STEPS
-            Console.Write("Enter the number of steps: ");
-            int numSteps = int.Parse(Console.ReadLine());
-
-            // INITIALIZES THE STEPS ARRAY WITH THE CORRECT SIZES
-            steps = new string[numSteps];
-
-            //THE USER TO ENTER THE NUMBER OF STEPS
-            for (int i = 0; i < numSteps; i++)
+            else
             {
-                Console.Write($"Enter step #{i + 1}: ");
-                steps[i] = Console.ReadLine();
+                Console.WriteLine("                     ");
+                Console.WriteLine("Please Enter A Number");
+                Console.WriteLine("                     ");
             }
+           
         }
 
         public void DisplayRecipe()
@@ -131,8 +140,13 @@ namespace RECIPEAPPLICATION
                     break;
                 case "3":
                     Console.Write("Enter scaling factor (0.5, 2, or 3): ");
-                    double factor = double.Parse(Console.ReadLine());
-                    recipe.ScaleRecipe(factor);
+                    double factor;
+                    if(double.TryParse(Console.ReadLine(), out factor)){
+                        recipe.ScaleRecipe(factor);
+                    } else{
+                        Console.WriteLine("Please enter a valid scaling factor");
+                    }
+                    
                     break;
                 case "4":
                     recipe.ResetQuantities();
